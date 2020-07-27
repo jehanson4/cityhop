@@ -5,11 +5,11 @@ import java.util.LinkedList;
 import java.util.Set;
 
 /** 
- * Determines whether two cities are connected.
+ * Task that determines whether two cities are connected.
  * <p>
  * Performs breath-first search on a given Roadmap, starting from a source city and searching for a target city.
  */
-public class ReachabilitySearch {
+public class ReachabilityCheck {
 	
 	public static enum Result {
 		TARGET_REACHABLE,
@@ -19,31 +19,36 @@ public class ReachabilitySearch {
 	}
 	
 	private final Roadmap roadmap;
+	private final String originName;
+	private final String destinationName;
 	
-	public ReachabilitySearch(Roadmap roadmap) {
+	public ReachabilityCheck(Roadmap roadmap, String originName, String destinationName) {
 		this.roadmap = roadmap;
+		this.originName = originName;
+		this.destinationName = destinationName;
 	}
 	
-	public Result search(String sourceName, String targetName) {
-		Roadmap.City sourceCity = roadmap.getCity(sourceName);
-		if (sourceCity == null)
+	public Result exec() {
+		Roadmap.City origin = roadmap.getCity(originName);
+		if (origin == null)
 			return Result.SOURCE_UNKNOWN;
 		
-		Roadmap.City targetCity = roadmap.getCity(targetName);
-		if (targetCity == null)
+		Roadmap.City destination = roadmap.getCity(destinationName);
+		if (destination == null)
 			return Result.TARGET_UNKNOWN;
 		
 		Set<Roadmap.City> visited = new HashSet<>();
 		LinkedList<Roadmap.City> openSet = new LinkedList<>();
-		openSet.addLast(sourceCity);
+		openSet.addLast(origin);
 		
 		while (!openSet.isEmpty()) {
-			Roadmap.City currentCity = openSet.removeFirst();
-			if (currentCity.equals(targetCity))
+			Roadmap.City current = openSet.removeFirst();
+			if (current.equals(destination))
 				return Result.TARGET_REACHABLE;
 			
-			visited.add(currentCity);
-			for (String neighborName: currentCity.getNeighbors()) {
+			visited.add(current);
+			for (String neighborName: current.getNeighbors()) {
+				// (Assume the roadmap is consistent, i.e., neighborCity exists.)
 				Roadmap.City neighborCity = roadmap.getCity(neighborName);
 				if (!visited.contains(neighborCity)) {
 					openSet.addLast(neighborCity);

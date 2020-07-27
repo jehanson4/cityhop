@@ -1,5 +1,9 @@
 package org.jehanson.cityhop;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -94,9 +98,32 @@ public class Roadmap {
 		city2.neighbors.add(name1);
 	}
 	
-	public void load(String url) {
-		// TODO
+	/**
+	 * Reads pairs of city names from the given input stream.
+	 * <p>
+	 * Expects 1 comma-separated pair of city names on each line of input.
+	 * Strips leading and trailing whitespace from each city name.
+	 * City names may contain internal whitespace but not commas.
+	 * Blank lines are not allowed.
+	 * <p>
+	 * Does not close the stream.
+	 *  
+	 * @param is Ths input stream
+	 * @throws IOException if a read error occurred
+	 * @throws FormatException if a syntax error was encountered
+	 */
+	public void load(InputStream is) throws IOException, FormatException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		String[] cityNames = null;
+		String line = reader.readLine();
+		int lineNumber = 1;
+		while (line != null) {
+			cityNames = line.split(",");
+			if (cityNames.length != 2 || cityNames[0].isBlank() || cityNames[1].isBlank())
+				throw new FormatException("Syntax error on line " + lineNumber + "\"" + line + "\"");			
+			addNeighbors(cityNames[0].strip(), cityNames[1].strip());
+			line = reader.readLine();
+			lineNumber++;
+		}
 	}
-	
-
 }

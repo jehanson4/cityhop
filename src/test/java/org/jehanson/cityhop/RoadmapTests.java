@@ -1,7 +1,15 @@
 package org.jehanson.cityhop;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class RoadmapTests {
 
@@ -44,20 +52,28 @@ public class RoadmapTests {
 		assertTrue(cityA.getNeighbors().contains("C"));
 	}
 
-	// @Test
-//	public void load() {
-//		Roadmap roadmap = new  Roadmap();
-//		String url = "goodRoadmap.csv";
-//		
-//		roadmap.load(url);
-//	}
+	@Test
+	public void load() throws IOException, FormatException {
+		Roadmap roadmap = new Roadmap();
+		InputStream is = this.getClass().getResourceAsStream("goodCity.txt");
+		try {
+			roadmap.load(is);
+		} finally {
+			is.close();
+		}
+	}
 
-	// @Test
-//	public void failedLoad_badURL() {
-//		Roadmap roadmap = new  Roadmap();
-//		String url = "noSuchRoadmap.csv";
-//		
-//		roadmap.load(url);
-//	}
+
+	@Test
+	public void failedLoad() throws IOException {
+		Roadmap roadmap = new Roadmap();
+		InputStream is = this.getClass().getResourceAsStream("badCity.txt");
+		try {
+			assertThrows(FormatException.class, () -> { roadmap.load(is); });
+		} finally {
+			is.close();
+		}
+	}
+
 
 }
