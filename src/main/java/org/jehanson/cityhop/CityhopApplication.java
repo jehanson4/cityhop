@@ -2,6 +2,7 @@ package org.jehanson.cityhop;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class CityhopApplication {
 	@Bean
 	CommandLineRunner loadRoadmap() {
 		return args -> {
+			logger.trace("loadRoadmap: started. args={}", Arrays.toString(args));
 			String fname = (args.length > 0) ? args[0] : defaultFile;
 			InputStream is = null;
 			try {

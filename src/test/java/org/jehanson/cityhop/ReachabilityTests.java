@@ -15,38 +15,38 @@ public class ReachabilityTests {
 	@Test
 	public void targetIsSource() {
 		ReachabilityCheck task = new ReachabilityCheck(roadmap, "A1", "A1");
-		assertEquals(task.exec(), ReachabilityCheck.Result.TARGET_REACHABLE);		
+		assertEquals(task.exec(), ReachabilityCheck.Result.REACHABLE);		
 	}
 	
 	
 	@Test
 	public void targetIsOneHop() {
 		ReachabilityCheck task = new ReachabilityCheck(roadmap, "A1", "A2");
-		assertEquals(task.exec(), ReachabilityCheck.Result.TARGET_REACHABLE);		
+		assertEquals(task.exec(), ReachabilityCheck.Result.REACHABLE);		
 	}
 	
 	@Test
 	public void targetIsMultipleHops() {
 		ReachabilityCheck task = new ReachabilityCheck(roadmap, "A1", "A3");
-		assertEquals(task.exec(), ReachabilityCheck.Result.TARGET_REACHABLE);
+		assertEquals(task.exec(), ReachabilityCheck.Result.REACHABLE);
 	}
 	
 	@Test
 	public void targetIsUnreachable() {
 		ReachabilityCheck task = new ReachabilityCheck(roadmap, "A1", "B1");
-		assertEquals(task.exec(), ReachabilityCheck.Result.TARGET_UNREACHABLE);		
+		assertEquals(task.exec(), ReachabilityCheck.Result.UNREACHABLE);		
 	}
 	
 	@Test
 	public void sourceIsUnknown() {
 		ReachabilityCheck task = new ReachabilityCheck(roadmap, "C1", "A1");
-		assertEquals(task.exec(), ReachabilityCheck.Result.SOURCE_UNKNOWN);		
+		assertEquals(task.exec(), ReachabilityCheck.Result.ORIGIN_UNKNOWN);		
 	}
 	
 	@Test
 	public void targetIsUnknown() {
 		ReachabilityCheck task = new ReachabilityCheck(roadmap, "A1", "C1");
-		assertEquals(task.exec(), ReachabilityCheck.Result.TARGET_UNKNOWN);		
+		assertEquals(task.exec(), ReachabilityCheck.Result.DESINATION_UNKNOWN);		
 	}
 
 	private static void preload(Roadmap roadmap) {

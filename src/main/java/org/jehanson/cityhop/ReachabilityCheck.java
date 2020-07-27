@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /** 
  * Task that determines whether two cities are connected.
  * <p>
@@ -11,52 +14,63 @@ import java.util.Set;
  */
 public class ReachabilityCheck {
 	
+	private static final String clsName = ReachabilityCheck.class.getName();
+	private static final Logger logger = LoggerFactory.getLogger(clsName);
+	
 	public static enum Result {
-		TARGET_REACHABLE,
-		TARGET_UNREACHABLE,
-		SOURCE_UNKNOWN,
-		TARGET_UNKNOWN
+		REACHABLE,
+		UNREACHABLE,
+		ORIGIN_UNKNOWN,
+		DESINATION_UNKNOWN
 	}
 	
 	private final Roadmap roadmap;
 	private final String originName;
 	private final String destinationName;
+	private final Set<Roadmap.City> visited;
 	
 	public ReachabilityCheck(Roadmap roadmap, String originName, String destinationName) {
 		this.roadmap = roadmap;
 		this.originName = originName;
 		this.destinationName = destinationName;
+		this.visited = new HashSet<>();
 	}
 	
 	public Result exec() {
+		logger.trace("exec: starting. origin=\"{}\" destination=\"{}\"", originName, destinationName);
+		Result result = doExec();
+		logger.trace("exec: done. result={} visited={}", result, visited.size());
+		visited.clear();
+		return result;
+	}
+	
+	private Result doExec() {
 		Roadmap.City origin = roadmap.getCity(originName);
 		if (origin == null)
-			return Result.SOURCE_UNKNOWN;
+			return Result.ORIGIN_UNKNOWN;
 		
 		Roadmap.City destination = roadmap.getCity(destinationName);
 		if (destination == null)
-			return Result.TARGET_UNKNOWN;
+			return Result.DESINATION_UNKNOWN;
 		
-		Set<Roadmap.City> visited = new HashSet<>();
 		LinkedList<Roadmap.City> openSet = new LinkedList<>();
 		openSet.addLast(origin);
-		
 		while (!openSet.isEmpty()) {
 			Roadmap.City current = openSet.removeFirst();
 			if (current.equals(destination))
-				return Result.TARGET_REACHABLE;
+				return Result.REACHABLE;
 			
 			visited.add(current);
 			for (String neighborName: current.getNeighbors()) {
-				// (Assume the roadmap is consistent, i.e., neighborCity exists.)
 				Roadmap.City neighborCity = roadmap.getCity(neighborName);
+				// (Assume the roadmap is consistent, i.e., neighborCity exists.)
 				if (!visited.contains(neighborCity)) {
 					openSet.addLast(neighborCity);
 				}				
 			}
 		}
 		
-		return Result.TARGET_UNREACHABLE;
+		return Result.UNREACHABLE;
 	}
 
 }
