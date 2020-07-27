@@ -16,6 +16,12 @@ It loads its graph of cities and roads from a local file--i.e., a "known" road i
  * did not separate the loading from the roadmap
  * chose gradle b/c more familiar to me than maven
  
-### Implementation Notes
+### Implementation Notes 
+
+ 
+### Suggested Improvements
+
+ * As per the instructions, the endpoint responds to any unexpected input with "no". This does not distinguish the case where the query URL is syntactically incorrect from the cas where one or both of the cities is unknown. It the case of incorrectly formatted URL it would be better to respond with a useful error message.
+
 
 
