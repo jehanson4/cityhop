@@ -14,12 +14,11 @@ To install and launch the app, open a terminal and do the following:
 
 1. cd to the dir in which you want to install the project (i.e., the project's parent dir).
 2. clone the github project via `https://github.com/jehanson4/cityhop.git`
-	
 3. cd to the project home dir
 4. Launch the app via `./gradlew bootRun`.  
    This loads the default file `city.txt`
 5. ALTERNATE: to read roadmap data from non-default location, do  
-	`./gradlew bootRun --args=myRoadMapData.txt`.
+	`./gradlew bootRun --args=myRoadMapData.txt`.  
 	Be sure to replace "myRoadMapData.txt" with the path to the file you want to load.
  
 Logs get written to standard output.
