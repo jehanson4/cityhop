@@ -23,9 +23,9 @@ To install and launch the app, open a terminal and do the following:
 	`./gradlew bootRun --args=myRoadMapData.txt`  
 	Be sure to replace "myRoadMapData.txt" with the path to the file you want to load.
  
-Logs get written to standard output. Overrides to default log levels are set `src/main/resources/application.properties`
+Logs get written to standard output. Overrides to default log levels are set in `src/main/resources/application.properties`
 
-Run JUnit tests from the command line via `./gradlew test` in the project's home directory.
+JUnit tests may be run from the command line via `./gradlew test`
 
 ### Usage
 
@@ -51,7 +51,7 @@ It would be possible in theory to speed up runtime response by building a comple
 
 At present the endpoint responds to any unexpected input with "no". This does not distinguish the case where the query URL is syntactically incorrect from the case where one or both of the cities is unknown. It the case of a syntactically incorrect URL it would be more user-friendly to respond with a useful error message.
  
-It would be more informative to provide the path linking the origin and destination cities in addition to just "yes". This is a straightforward enhancement
+It would be more informative to provide the path linking the origin and destination cities in addition to just "yes". This is a straightforward enhancement.
 
 
 ### Implementation Details 
