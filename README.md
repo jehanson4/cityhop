@@ -13,15 +13,17 @@ Prerequisite: Java 11
 To install and launch the app, open a terminal and do the following:
 
 1. cd to the dir in which you want to install the project (i.e., the project's parent dir).
-2. clone the github project via `git clone https://github.com/jehanson4/cityhop.git`
+2. clone the github project via  
+   `git clone https://github.com/jehanson4/cityhop.git`
 3. cd to the project home dir
-4. Launch the app via `./gradlew bootRun`.  
+4. Launch the app via  
+   `./gradlew bootRun`  
    This loads the default file `city.txt`
 5. ALTERNATE: to read roadmap data from non-default location, do  
-	`./gradlew bootRun --args=myRoadMapData.txt`.  
+	`./gradlew bootRun --args=myRoadMapData.txt`  
 	Be sure to replace "myRoadMapData.txt" with the path to the file you want to load.
  
-Logs get written to standard output.
+Logs get written to standard output. Overrides to default log levels are set `src/main/resources/application.properties`
 
 Run JUnit tests from the command line via `./gradlew test` in the project's home directory.
 
@@ -54,6 +56,6 @@ It would be more informative to provide the path linking the origin and destinat
 
 ### Implementation Details 
 
-cityhop was written and tested on a Mac with openjdk version 11.0.8. The project skeleton was created via [Spring Initializr](https://start.spring.io/) on 27 Jul7 2020.
+cityhop was written and tested on a Mac with openjdk 11.0.8. The project skeleton was created via [Spring Initializr](https://start.spring.io/) on 27 Jul 2020.
 
 
