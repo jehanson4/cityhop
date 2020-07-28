@@ -16,8 +16,11 @@ import org.springframework.stereotype.Service;
 /**
  * Directed graph of cities and roads.
  * <p>
- * Roads are not explicitly modeled. Instead, each City maintains a set of its neighboring Cities.
- * 
+ * Roads are not explicitly modeled.
+ * Instead, each City maintains a set of its neighboring cities.
+ * So it's not <i>strictly</i> a digraph.
+ * <p>
+ * <b>NOT</b> threadsafe. But it should be OK to use in multithreaded environments if you don't change it after startup time.
  */
 @Service
 public class Roadmap {
@@ -79,7 +82,7 @@ public class Roadmap {
 	 * Adds two cities and a two-way road between them. OK if they already exist.
 	 * 
 	 *  @param name1 Name of a city. Not null.
-	 *  @param name2 Name of another city. Not null, not equal to name1.
+	 *  @param name2 Name of another city. Not null.
 	 */
 	public void addNeighbors(String name1, String name2) {
 		City city1 = cities.get(name1);
@@ -108,7 +111,7 @@ public class Roadmap {
 	 * <p>
 	 * Does not close the stream.
 	 *  
-	 * @param is Ths input stream
+	 * @param is The input stream
 	 * @throws IOException if a read error occurred
 	 * @throws FormatException if a syntax error was encountered
 	 */
@@ -120,7 +123,7 @@ public class Roadmap {
 		while (line != null) {
 			cityNames = line.split(",");
 			if (cityNames.length != 2 || cityNames[0].isBlank() || cityNames[1].isBlank())
-				throw new FormatException("Syntax error on line " + lineNumber + "\"" + line + "\"");			
+				throw new FormatException("Syntax error on line " + lineNumber + ": \"" + line + "\"");			
 			addNeighbors(cityNames[0].strip(), cityNames[1].strip());
 			line = reader.readLine();
 			lineNumber++;
