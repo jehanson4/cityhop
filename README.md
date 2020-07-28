@@ -6,7 +6,7 @@ Demo RESTful service using Spring Boot
 
 It loads the roads from a local text file--which means: a "known road" is a road found in the file. 
 
-## Install and Run (macOS, Linux)
+### Install and Run (macOS, Linux)
 
 Prerequisite: Java 11
 
